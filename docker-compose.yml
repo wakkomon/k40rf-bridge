@@ -1,0 +1,45 @@
+# Portainer-Stack: Bosch K 40 RF -> MQTT
+#
+# Deployment in Portainer: Stacks -> Add stack -> "Repository"
+#   Repository URL:   https://github.com/wakkomon/k40rf-bridge
+#   Compose path:     docker-compose.yml
+# Werte unten unter "Environment variables" setzen (siehe .env.example).
+
+services:
+  k40rf-bridge:
+    build: .
+    image: k40rf-bridge:latest
+    container_name: k40rf-bridge
+    restart: unless-stopped
+    # Explizite DNS-Server, falls der Docker-Host keine an Container weitergibt
+    # (nur fuer den Image-Build relevant). Gern durch die Router-IP ersetzen.
+    dns:
+      - 1.1.1.1
+      - 9.9.9.9
+    volumes:
+      - k40rf-data:/data                   # Token wird hier gespeichert
+    environment:
+      TZ: Europe/Berlin
+
+      # --- K 40 RF ---------------------------------------------------------
+      K40_HOST: ${K40_HOST:-192.168.1.50}       # IP des Connect-Key K 40 RF
+      K40_USERNAME: ${K40_USERNAME:-}           # Login vom Aufkleber (nur fuers Pairing)
+      K40_PASSWORD: ${K40_PASSWORD:-}           # Pass vom Aufkleber
+      K40_QR: ${K40_QR:-}                       # alternativ: QR-Text vom Aufkleber
+      K40_TOKEN: ${K40_TOKEN:-}                 # alternativ: vorhandenes Token
+
+      # --- MQTT ------------------------------------------------------------
+      MQTT_HOST: ${MQTT_HOST:-192.168.1.10}
+      MQTT_PORT: ${MQTT_PORT:-1883}
+      MQTT_USER: ${MQTT_USER:-}
+      MQTT_PASSWORD: ${MQTT_PASSWORD:-}
+      MQTT_BASE_TOPIC: ${MQTT_BASE_TOPIC:-k40rf}
+
+      # --- Verhalten -------------------------------------------------------
+      POLL_INTERVAL: ${POLL_INTERVAL:-30}
+      INCLUDE_SIGNALS: ${INCLUDE_SIGNALS:-true}
+      HA_DISCOVERY: ${HA_DISCOVERY:-true}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+
+volumes:
+  k40rf-data:
