@@ -168,3 +168,33 @@ Apache-2.0, siehe [LICENSE](LICENSE).
 - [bosch-buderus-wp.github.io – Local API](https://bosch-buderus-wp.github.io/en/docs/smarthome/local-api/)
 
 Kein offizielles Bosch-Produkt und nicht mit Bosch verbunden.
+
+
+## Sollwerte schreiben: openHAB-Beispielintegration (Bosch-Binding)
+
+Die Bridge selbst ist nur lesend. Wer die Sollwerte zusätzlich über das Bosch-Smart-Home-
+Binding steuert (eigene Bosch-Things im openHAB), findet in `openhab/` eine passende
+Beispielintegration:
+
+| Datei | Inhalt |
+|---|---|
+| `openhab/bosch-items.items` | Sollwert-Items mit Channel-Link (Beispiel: 13 Räume) |
+| `openhab/bosch-setpoint-forward.rules` | Regel:änderungen der Items werden an die Geräte durchgereicht |
+
+**Warum die Regel nötig ist:** Das Bosch-Binding wird nur aktiv, wenn dem Item ein
+*Kommando* gesendet wird (`sendCommand`, UI, REST-POST auf `/rest/items/<item>/state`).
+Ein reiner State-Update (REST-PUT, `postUpdate`) ist kein Kommando und erreicht das
+Gerät nicht. Die Regel fängt jede echte Wertänderung und sendet sie als Kommando zurück.
+
+Trigger auf `changed` statt Update: Nach dem Write bestätigt das Binding denselben Wert,
+was keinen Loop erzeugt. So funktioniert auch `postUpdate` z.B. aus Scripts.
+
+Anwendung: Dateien nach `conf/items` bzw. `conf/rules` legen (oder in der UI nachbauen),
+dann z.B.:
+
+```bash
+curl -X PUT http://<openhab>:8080/rest/items/T02Bad_SetpointTemperature/state \
+     -H 'Content-Type: text/plain' -d '21.5'
+```
+
+Getestet live mit Bosch Smart Home Controller + Bosch-Binding in openHAB.

@@ -1,0 +1,19 @@
+// Beispielintegration: Bosch-Sollwert-Items (Beispielinstanz, 13 Räume)
+// Gruppe + Channel-Links; Gruppe wird von der Regel bosch-setpoint-forward benutzt.
+// Thing-ID ("beispiel") und Raumbezeichnungen sind Platzhalter — durch die
+// eigenen Werte aus dem openHAB-Thing ersetzen.
+
+Group TempAllSetpoint "Solltemperaturen"
+Number:Temperature T01Flur_SetpointTemperature "Solltemperatur Flur 1.OG" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_13:setpoint-temperature" }
+Number:Temperature T01Schlafzimmer_SetpointTemperature "Solltemperatur Schlafzimmer 1.OG" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_14:setpoint-temperature" }
+Number:Temperature T01Wohnzimmer_SetpointTemperature "Solltemperatur Wohnzimmer 1.OG" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_12:setpoint-temperature" }
+Number:Temperature T02Arbeitszimmer_SetpointTemperature "Solltemperatur Arbeitszimmer 2.OG" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_10:setpoint-temperature" }
+Number:Temperature T02Bad_SetpointTemperature "Solltemperatur Bad 2.OG" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_2:setpoint-temperature" }
+Number:Temperature T02Gaestezimmer_SetpointTemperature "Solltemperatur Gaestezimmer 2.OG" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_9:setpoint-temperature" }
+Number:Temperature T03Kinderzimmer_SetpointTemperature "Solltemperatur Kinderzimmer" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_7:setpoint-temperature" }
+Number:Temperature T03Wohnzimmer_SetpointTemperature "Solltemperatur Wohnzimmer 3.OG" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_8:setpoint-temperature" }
+Number:Temperature T03Diele_SetpointTemperature "Solltemperatur Diele 3.OG" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_6:setpoint-temperature" }
+Number:Temperature T04Buero_SetpointTemperature "Solltemperatur Buero 4.OG" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_3:setpoint-temperature" }
+Number:Temperature T04Bad_SetpointTemperature "Solltemperatur Bad 4.OG" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_5:setpoint-temperature" }
+Number:Temperature T04SchlafzimmerVorn_SetpointTemperature "Solltemperatur Schlafzimmer Vorn" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_4:setpoint-temperature" }
+Number:Temperature T04SchlafzimmerHinten_SetpointTemperature "Solltemperatur Schlafzimmer Hinten" < TempAllSetpoint { channel="boschshc:climate-control:beispiel:roomClimateControl_hz_4:setpoint-temperature" }

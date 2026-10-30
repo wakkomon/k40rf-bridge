@@ -1,0 +1,21 @@
+// openHAB Beispiel: Bosch-Sollwerte zurück an die Geräte (SHC)
+//
+// Das Bosch-Binding schreibt an die Geräte nur, wenn dem Item ein KOMMANDO
+// gesendet wird (sendCommand, UI-Klick, REST-POST auf den State-Endpunkt).
+// Ein reiner State-Update (PUT /rest/items/<item>/state, postUpdate) ist kein
+// Kommando und erreicht das Gerät nicht. Diese Regel leitet jede echte
+// Änderung der Sollwert-Items als Kommando an den Channel-Link weiter.
+//
+// Wichtig: Trigger auf "changed", nicht auf Update. Nach dem Schreiben meldet
+// das Binding denselben Wert zurück -> bei change-Semantik kein Event, der
+// Loop schließt sich selbst. Ein Update-Trigger würde dagegen loop(en).
+//
+// Voraussetzung: Items mit Channel-Link zum Bosch-Raum, wie in
+// openhab/bosch-items.items (Gruppe TempAllSetpoint).
+
+rule "bosch-setpoint-forward"
+  when
+    Member of TempAllSetpoint changed
+  then
+    sendCommand(triggeringItem.name, triggeringItem.state)
+  end
