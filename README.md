@@ -2,6 +2,9 @@
 
 Bosch Connect-Key **K 40 RF** → **MQTT** Bridge, z. B. für openHAB oder Home Assistant.
 
+> **Hinweis:** Dieses Projekt ist KI-generiert — Code und Dokumentation wurden von einem
+> KI-Agenten geschrieben und danach in der Praxis geprüft.
+
 Liest die **lokale REST-API** des K 40 RF (ab Firmware 15.00.01) und veröffentlicht alle
 verfügbaren Werte der Wärmepumpe per MQTT, optional mit Home-Assistant-Discovery
 (die auch das openHAB-MQTT-Binding versteht). Komplett lokal, ohne Bosch-Cloud.
